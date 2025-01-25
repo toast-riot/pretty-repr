@@ -1,13 +1,9 @@
-def pretty_repr(obj, skipkeys: bool = False, check_circular: bool = False, indent: int | str | None = None, separators: tuple[str, str] | None = None, sort_keys: bool = False) -> str:
+def pretty_repr(obj, skipkeys: bool = False, indent: int | str | None = None, separators: tuple[str, str] | None = None, sort_keys: bool = False) -> str:
     """Return a nicely formatted string representation of a Python object.
-
-    WARNING: check_circular may behave unexpectedly with non-builtin objects. I would advise against using it.
 
     Behaves similarly to ``json.dumps``.
 
     ``skipkeys``: ``dict`` keys that are not basic types (``str``, ``int``, ``float``, ``bool``, ``None``) will be skipped.
-
-    ``check_circular``: Throw a ``ValueError`` if circular references are detected.
 
     ``indent``: The level of indentation to use. If a string is specified, it will be used as the indentation.
 
@@ -22,26 +18,20 @@ def pretty_repr(obj, skipkeys: bool = False, check_circular: bool = False, inden
 
     invalid_key = lambda k: skipkeys and not isinstance(k, (str, int, float, bool, type(None)))
 
-    def encoder(key, val, current_indent="", seen=None):
-        if seen is None: seen = set()
+    def encoder(key, val, current_indent=""):
         brackets = ("", "")
         content = []
-
-        if check_circular:
-            if id(val) in seen:
-                raise ValueError("Circular reference detected")
-            seen.add(id(val))
 
         if isinstance(val, dict):
             brackets = ("{", "}")
             for k in sorted(val) if sort_keys else val.keys():
                 if invalid_key(k): continue
                 v = val[k]
-                content.append(encoder(repr(k), v, current_indent + indent, seen))
+                content.append(encoder(repr(k), v, current_indent + indent))
         elif isinstance(val, list):
             brackets = ("[", "]")
             for item in val:
-                content.append(encoder(None, item, current_indent + indent, seen))
+                content.append(encoder(None, item, current_indent + indent))
         else:
             content.append(repr(val))
 

@@ -24,6 +24,7 @@ testobj = {
 # testobj['self'] = testobj
 
 formatted = pretty_repr(testobj, indent=4)
+print(formatted)
 
 try:
     passed = ast.literal_eval(formatted) == testobj
