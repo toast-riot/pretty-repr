@@ -1,5 +1,7 @@
-def pretty_repr(obj, skipkeys: bool = False, check_circular: bool = True, indent: int | str | None = None, separators: Tuple[str, str] | None = None, sort_keys: bool = False) -> str:
+def pretty_repr(obj, skipkeys: bool = False, check_circular: bool = False, indent: int | str | None = None, separators: tuple[str, str] | None = None, sort_keys: bool = False) -> str:
     """Return a nicely formatted string representation of a Python object.
+
+    WARNING: check_circular may behave unexpectedly with non-builtin objects. I would advise against using it.
 
     Behaves similarly to ``json.dumps``.
 
