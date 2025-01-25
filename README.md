@@ -1,7 +1,7 @@
 # Pretty Repr
 Like repr but pretty.
 
-A Python function that returns the Python representation of an object, formatted nicely. No dependencies. The parameters are very similar to json.dumps().
+A Python function that returns the Python representation of an object, formatted nicely. No dependencies. The parameters are very similar to `json.dumps()`.
 
 `pretty_repr_lite` is an ultra-lightweight version of the function that is easier to understand and adapt to specific usecases.
 
